@@ -1,16 +1,100 @@
+
 from django.shortcuts import render, HttpResponse
-from .models import Article
-from .serializers import ArticleSerializer
+from .models import Article, Estudiantes
+from .serializers import ArticleSerializer, EstudianteSerializer, UserSerializer
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status 
 from rest_framework.decorators import APIView
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import mixins
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
 # from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 # minuto 1:40:13
+
+class articleViewset(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
+mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin ):
+    queryset=Article.objects.all()
+    serializer_class=ArticleSerializer
+    authentication_classes=(TokenAuthentication,)
+    permission_classes=[IsAuthenticated]
+
+class ArticlesViewSet(viewsets.ViewSet):
+    permission_classes=[IsAuthenticated]
+    authentication_classes=(TokenAuthentication,)
+    def list(self,request):
+        article = Article.objects.all()
+        serializer =ArticleSerializer(article, many=True)
+        return Response(serializer.data)
+    
+    def create(self,request):
+        serializer= ArticleSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        queryset= Article.objects.all()
+        article= get_object_or_404(queryset, pk=pk)
+        serializer= ArticleSerializer(article)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        article=Article.objects.get(pk=pk)
+        serializer= ArticleSerializer(article,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def destroy(self, request, pk=None):
+        article=Article.objects.get(pk=pk)
+        article.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class EstudianteViewSet(viewsets.ViewSet):
+    # permission_classes=[IsAuthenticated]
+    # authentication_classes=(TokenAuthentication,)
+    def list(self,request):
+        estudiante = Estudiantes.objects.all()
+        serializer =EstudianteSerializer(estudiante, many=True)
+        return Response(serializer.data)
+    
+    def create(self,request):
+        serializer= EstudianteSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        queryset= Estudiantes.objects.all()
+        article= get_object_or_404(queryset, pk=pk)
+        serializer= EstudianteSerializer(article)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        estudiante=Estudiantes.objects.get(pk=pk)
+        serializer= EstudianteSerializer(estudiante,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def destroy(self, request, pk=None):
+        estudiante=Estudiantes.objects.get(pk=pk)
+        estudiante.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class ArticleList(APIView):
     def get(self, request):
@@ -51,6 +135,20 @@ class article_details(APIView):
         article = self.get_object(id)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset= User.objects.all()
+    serializer_class= UserSerializer
+
+
+
+
+
+
+
+
+
+
 
 
 # # @csrf_exempt
