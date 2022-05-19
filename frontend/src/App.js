@@ -1,9 +1,11 @@
 
 import './App.css';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import Navbar from './components/Navbar.js';
 import { BrowserRouter, Routes,Route } from "react-router-dom";
 import MostrarEstudiante from './components/MostrarEstudiante.js'
+import CrearEstudiantes from './components/CrearEstudiante.js';
+import EditarEstudiante from './components/EditarEstudiante';
 function App() {
 
   // const [estudiantes, setEstudiantes]= useState([])
@@ -32,6 +34,8 @@ function App() {
       <BrowserRouter>
       <Routes>
       <Route  path='/' element= {<MostrarEstudiante/>} />
+      <Route path='/create' element= {<CrearEstudiantes/>} />
+      <Route path='/edit/:id/' element= {<EditarEstudiante/>} />
       </Routes>
       </BrowserRouter>
     </div>

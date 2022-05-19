@@ -84,7 +84,7 @@ class EstudianteViewSet(viewsets.ViewSet):
 
     def update(self, request, pk=None):
         estudiante=Estudiantes.objects.get(pk=pk)
-        serializer= EstudianteSerializer(estudiante,data=request.data)
+        serializer= EstudianteSerializer(estudiante,data=request.data,)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
