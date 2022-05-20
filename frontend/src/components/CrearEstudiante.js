@@ -17,14 +17,14 @@ const CrearEstudiantes = () => {
 
   const guardar = async (e) => {
     e.preventDefault();
-    await axios.post(URI, {
+    await axios.post(URI,{
       nombre: nombre,
       apellido: apellido,
       numero: numero,
       correo: correo,
       programa: programa,
     });
-    navigate("/");
+    navigate("/estudiantes");
   };
 
   return (
@@ -100,6 +100,9 @@ const CrearEstudiantes = () => {
             
                   
             <button type='submit' className='btn btn-primary' > Guardar </button>
+            {"     "},{"  "}
+            <a name="" id="" class="btn btn-danger" href='http://localhost:3000/estudiantes'>Cancelar</a>
+      
         </form>
             </div>
 

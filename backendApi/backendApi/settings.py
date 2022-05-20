@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# APPEND_SLASH=False
 
 # Application definition
 
@@ -62,6 +63,8 @@ MIDDLEWARE = [
 ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    # 'http://localhost:3000/metodos'
+    
 ]
 
 ROOT_URLCONF = 'backendApi.urls'

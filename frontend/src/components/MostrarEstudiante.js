@@ -19,7 +19,7 @@ const MostrarEstudiantes = () => {
     setEstudiantes(res.data);
   };
   const deleteestudiantes = async (id) => {
-    await axios.delete(`${URI}${id}`)
+    await axios.delete(`${URI}${id}${"/"}`)
     getEstudiantes()
   };
 

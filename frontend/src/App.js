@@ -5,7 +5,11 @@ import Navbar from './components/Navbar.js';
 import { BrowserRouter, Routes,Route } from "react-router-dom";
 import MostrarEstudiante from './components/MostrarEstudiante.js'
 import CrearEstudiantes from './components/CrearEstudiante.js';
-import EditarEstudiante from './components/EditarEstudiante';
+import EditarEstudiante from './components/EditarEstudiante.js';
+import Metodos from './components/Metodos.js';
+import MostrarProfesor from './components/MostrarProfesor.js';
+import CrearProfesor from './components/CrearPorfesor.js';
+import EditarProfesor from './components/EditarProfesor.js';
 function App() {
 
   // const [estudiantes, setEstudiantes]= useState([])
@@ -28,14 +32,17 @@ function App() {
   return (
     <div>
       <Fragment>
-        <Navbar brand='Estudiantes' api='Mostar Api' 
-      asignatura='Asignaturas' clase='Clases' />
+        <Navbar estudiantes='Estudiantes' asignatura='Asignaturas' profesor='Profesor' clase='Clases' metodos='Metodos' />
       </Fragment>
       <BrowserRouter>
       <Routes>
-      <Route  path='/' element= {<MostrarEstudiante/>} />
+      <Route path='/metodos' element= {<Metodos/>} />
+      <Route path='/profesor' element= {<MostrarProfesor/>} />
+      <Route path='/crear' element= {<CrearProfesor/>} />
+      <Route path='/estudiantes' element= {<MostrarEstudiante/>} />
       <Route path='/create' element= {<CrearEstudiantes/>} />
       <Route path='/edit/:id/' element= {<EditarEstudiante/>} />
+      <Route path='/editprofesor/:id/' element= {<EditarProfesor/>} />
       </Routes>
       </BrowserRouter>
     </div>

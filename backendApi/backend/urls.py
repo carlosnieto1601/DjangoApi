@@ -2,14 +2,16 @@
 
 from django.urls import path, include
 # from .views import ArticleList,article_details
-from .views import ArticlesViewSet, articleViewset, UserViewSet,EstudianteViewSet
+from .views import ArticlesViewSet, articleViewset, UserViewSet,EstudianteViewSet, ProfesorViewSet
 from rest_framework.routers import DefaultRouter
 
 
 router= DefaultRouter()
 router.register('articles', ArticlesViewSet, basename='articles')
 router.register('estudiantes', EstudianteViewSet, basename='estudiantes')
+router.register('profesor', ProfesorViewSet, basename='profesor')
 router.register('users', UserViewSet)
+
 
 
 urlpatterns = [

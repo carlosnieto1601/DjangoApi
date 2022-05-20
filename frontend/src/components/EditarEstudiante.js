@@ -2,12 +2,13 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate , useParams} from 'react-router-dom';
 
-const URI = "http://127.0.0.1:8000/api/estudiantes/";
+
+const URI = 'http://127.0.0.1:8000/api/estudiantes/';
 
 const EditarEstudiante= () => {
    
-    const [nombre, setnombre] = useState('')
-    const [apellido, setapellido] = useState('')
+    const [nombre, setnombre] = useState('');
+    const [apellido, setapellido] = useState('');
     const [numero, setnumero] = useState("");
     const [correo, setcorreo] = useState("");
     const [programa, setprograma] = useState("");
@@ -16,7 +17,7 @@ const EditarEstudiante= () => {
 
         const update = async (e) =>{
             e.preventDefault()
-            await axios.put(URI+ id, {
+            await axios.put(URI+ id + "/", {
                 id:e.id,
                 nombre: nombre,
                 apellido: apellido,
@@ -24,7 +25,7 @@ const EditarEstudiante= () => {
                 correo: correo,
                 programa: programa,
             })
-            navigate('/')
+            navigate('/estudiantes')
 
         }
 
@@ -39,7 +40,6 @@ const getEstudiantesById=  async (e) => {
     setnumero(res.data.numero)
     setcorreo(res.data.correo)
     setprograma(res.data.programa)
-
 }
 
 return(
@@ -49,7 +49,7 @@ return(
             <br></br>
             <h1 style={{textAlign:'center'}}> Editar Estudiante </h1>
             
-        <form onSubmit={update.id} >
+        <form onSubmit={update} >
             <div>
             <div className='col-6 mb-4'>
                 <label className="mb-3"> Nombre </label>
@@ -122,6 +122,8 @@ return(
             
                   
             <button type='submit' className='btn btn-primary' > Editar Estudiante </button>
+            {"     "},{"  "}
+            <a name="" id="" class="btn btn-danger" href='http://localhost:3000/estudiantes'>Cancelar</a>
         </form>
             </div>
 

@@ -1,7 +1,8 @@
 from dataclasses import fields
+from pyexpat import model
 from statistics import mode
 from rest_framework import serializers
-from .models import Article, Estudiantes
+from .models import Article, Estudiantes, clases, Profesor,Asignaturas
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
 # class ArticleSerializers(serializers.Serializer):
@@ -24,7 +25,21 @@ class EstudianteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estudiantes
         fields = ['id', 'nombre','apellido','numero','correo','programa']
+
+class ClaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= clases
+        fields=['id', 'nombre','estudiante','asignatura']
     
+class PorfesorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Profesor
+        fields=['id', 'nombre','apellido']
+
+class AsignaturasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Asignaturas
+        fields=['id','nombre','salon','horario','profesor']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, HttpResponse
-from .models import Article, Estudiantes
-from .serializers import ArticleSerializer, EstudianteSerializer, UserSerializer
+from .models import Article, Estudiantes, Profesor,clases,Asignaturas
+from .serializers import ArticleSerializer, EstudianteSerializer, UserSerializer, ClaseSerializer, PorfesorSerializer,AsignaturasSerializer
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
@@ -18,7 +18,7 @@ from django.contrib.auth.models import User
 # from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
-# minuto 1:40:13
+#minuto 1:40:13
 
 class articleViewset(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
 mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin ):
@@ -95,6 +95,39 @@ class EstudianteViewSet(viewsets.ViewSet):
         estudiante.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class ProfesorViewSet(viewsets.ViewSet):
+    # permission_classes=[IsAuthenticated]
+    # authentication_classes=(TokenAuthentication,)
+    def list(self,request):
+        profesor = Profesor.objects.all()
+        serializer =PorfesorSerializer(profesor, many=True)
+        return Response(serializer.data)
+    
+    def create(self,request):
+        serializer= PorfesorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        queryset= Profesor.objects.all()
+        article= get_object_or_404(queryset, pk=pk)
+        serializer= PorfesorSerializer(article)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        estudiante=Profesor.objects.get(pk=pk)
+        serializer= PorfesorSerializer(estudiante,data=request.data,)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def destroy(self, request, pk=None):
+        estudiante=Profesor.objects.get(pk=pk)
+        estudiante.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ArticleList(APIView):
     def get(self, request):
@@ -139,6 +172,8 @@ class article_details(APIView):
 class UserViewSet(viewsets.ModelViewSet):
     queryset= User.objects.all()
     serializer_class= UserSerializer
+
+
 
 
 
